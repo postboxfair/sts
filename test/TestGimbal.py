@@ -40,5 +40,5 @@ class TestGimbal(unittest.TestCase):
         gimbal.start()
         gimbal.calibrate(30, 10)
         time.sleep(5)
-        gimbal.move_x(45, 5, 0)
+        gimbal.move_x(45, 0.088, 0)
         gimbal.shutdown()
