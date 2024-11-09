@@ -28,14 +28,14 @@ class TestGimbal(unittest.TestCase):
         self.assertTrue(len(ports) != 0, "No COM devices")
         self.assertTrue(len(ports) == 1, "Multiple COM devices connected. Could not resolve appropriate driver board")
 
-    def test_calibrate(self):
+    def test_set_middle_position_per_x_y_coordinates(self):
         gimbal = Gimbal(serial.tools.list_ports.comports()[0].name)
         gimbal.start()
         gimbal.calibrate(30, 10)
         time.sleep(5)
         gimbal.shutdown()
 
-    def test_move_right_by_30_degree(self):
+    def test_move_right_by_45_degree_when_servo_has_a_stable_speed_of_5_degrees_per_second(self):
         gimbal = Gimbal(serial.tools.list_ports.comports()[0].name)
         gimbal.start()
         gimbal.calibrate(30, 10)
