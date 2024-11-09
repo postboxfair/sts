@@ -37,7 +37,7 @@ class Gimbal:
     def shutdown(self):
         self.port.closePort()
 
-    def calibrate(self, speed: int = 1, acc: int = 1):
+    def calibrate(self, speed: float = 1, acc: float = 1):
         requested_speed = int((4095 * speed) / 360)
         requested_acc = 0 if acc == 0 else int((4095 * acc) / 360)
 
@@ -45,7 +45,7 @@ class Gimbal:
         self.sts.WritePosEx(self.y_servo_id, STS_MID_POSITION, requested_speed, requested_acc)
 
 
-    def __move(self, servo_id, angle: float, speed: int = 1, acc: int = 1):
+    def __move(self, servo_id, angle: float, speed: float = 1, acc: float = 1):
         current_position, result, error = self.sts.ReadPos(servo_id)
         if result != COMM_SUCCESS:
             raise Exception(self.sts.getTxRxResult(result))
@@ -64,7 +64,7 @@ class Gimbal:
 
         self.sts.WritePosEx(servo_id, requested_position, requested_speed, requested_acc)
 
-    def move_x(self, angle: float, speed: int = 1, acc: int = 1) -> None:
+    def move_x(self, angle: float, speed: float = 1, acc: float = 1) -> None:
         """
         Horizontal move. Turns horizontal servo by specified angle.
         Default speed is 1 degree per second.
@@ -77,7 +77,7 @@ class Gimbal:
         """
         self.__move(self.x_servo_id, angle, speed, acc)
 
-    def move_y(self, angle: float, speed: int = 1, acc: int = 1) -> None:
+    def move_y(self, angle: float, speed: float = 1, acc: float = 1) -> None:
         """
         Vertical move. Turns vertical servo by specified angle.
         Default speed is 1 degree per second.
