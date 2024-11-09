@@ -45,7 +45,7 @@ class Gimbal:
         self.sts.WritePosEx(self.y_servo_id, STS_MID_POSITION, requested_speed, requested_acc)
 
 
-    def __move(self, servo_id, angle: float, speed: float = 1, acc: float = 1):
+    def __move(self, servo_id: int, angle: float, speed: float = 1, acc: float = 1):
         current_position, result, error = self.sts.ReadPos(servo_id)
         if result != COMM_SUCCESS:
             raise Exception(self.sts.getTxRxResult(result))
@@ -59,8 +59,6 @@ class Gimbal:
 
         requested_speed = int((4095 * speed) / 360)
         requested_acc = 0 if acc == 0 else int((4095 * acc) / 360)
-
-
 
         self.sts.WritePosEx(servo_id, requested_position, requested_speed, requested_acc)
 
@@ -107,3 +105,15 @@ class Gimbal:
         self.sts.WheelMode(self.x_servo_id)
         self.sts.WheelMode(self.y_servo_id)
 
+    def __rotate(self, servo_id: int, speed: float = 1, acc: float = 1):
+        requested_speed = int((4095 * speed) / 360)
+        requested_acc = 0 if acc == 0 else int((4095 * acc) / 360)
+
+        self.sts.WriteSpec(self.x_servo_id, requested_speed, requested_acc)
+
+
+    def rotate_x(self, speed: float = 1, acc: float = 1):
+        self.__rotate(self.x_servo_id, speed, acc)
+
+    def rotate_y(self, speed: float = 1, acc: float = 1):
+        self.__rotate(self.y_servo_id, speed, acc)

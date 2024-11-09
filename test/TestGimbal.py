@@ -35,10 +35,19 @@ class TestGimbal(unittest.TestCase):
         time.sleep(5)
         gimbal.shutdown()
 
-    def test_move_right_by_45_degree_when_servo_has_a_stable_speed_of_5_degrees_per_second(self):
+    def test_move_right_by_45_degree_when_servo_has_a_stable_speed_of_0_088_degrees_per_second(self):
         gimbal = Gimbal(serial.tools.list_ports.comports()[0].name)
         gimbal.start()
         gimbal.calibrate(30, 10)
         time.sleep(5)
         gimbal.move_x(45, 0.088, 0)
+        gimbal.shutdown()
+
+    def test_rotate_right_by_45_degree_when_servo_has_a_stable_speed_of_0_088_degrees_per_second(self):
+        gimbal = Gimbal(serial.tools.list_ports.comports()[0].name)
+        gimbal.start()
+        gimbal.calibrate(30, 10)
+        time.sleep(5)
+        gimbal.turn_on_wheel_mode()
+        gimbal.rotate_x(0.088, 0)
         gimbal.shutdown()
